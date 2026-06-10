@@ -7,7 +7,7 @@ st.set_page_config(page_title="Skladiste Cloud", layout="wide")
 st.title("📦 Skladiste Mobile-Ready")
 
 # Povezivanje s Google Sheets
-url = " https://docs.google.com/spreadsheets/d/1AtSdX-pOFb-IaT1ACI7X7XkI4UjaMXDGvbZPMU-zxbg/edit?usp=drivesdk"
+url = "https://docs.google.com/spreadsheets/d/1AtSdX-pOFb-IaT1ACI7X7XkI4UjaMXDGvbZPMU-zxbg/edit?usp=drivesdk"
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Učitaj podatke
