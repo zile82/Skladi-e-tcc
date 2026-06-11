@@ -59,20 +59,6 @@ import numpy as np
 
 st.divider() # Linija za razdvajanje
 st.subheader("📷 Skeniraj bar-kod kamerom")
-
-# Dugme za paljenje kamere
-img_file_buffer = st.camera_input("Usmeri kameru prema bar-kodu")
-
-if img_file_buffer is not None:
-    # Pretvaranje slike u format koji program razume
-    img = Image.open(img_file_buffer)
-    
-    # Čitanje bar-koda sa slike
-    import streamlit as st
-from pyzbar.pyzbar import decode
-from PIL import Image, ImageOps
-import numpy as np
-
 st.divider()
 st.subheader("📷 Skeniraj bar-kod (EAN-13)")
 
