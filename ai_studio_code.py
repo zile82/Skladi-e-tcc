@@ -83,17 +83,31 @@ if img_file_buffer is not None:
         barcodes = decode(img)
     
     if barcodes:
-        for barcode in barcodes:
-            barcode_data = barcode.data.decode("utf-8")
-            # Čišćenje nula sa početka ako ih Excel skrati
-            clean_code = barcode_data.lstrip('0')
+    for barcode in barcodes:
+            # 1. Uzmi skenirani kod i očisti ga
+            scanned_code = str(barcode.data.decode("utf-8")).strip()
+            st.success(f"✅ Skenirano: {scanned_code}")
+
+            # 2. Pripremi kolonu iz tablice za usporedbu
+            # (Provjeri zove li se kolona 'sku' ili 'skl' u Excelu i ovdje upiši točno tako)
+            naziv_kolone_u_excelu = 'sku' 
             
-            st.success(f"✅ Prepoznat kod: {barcode_data}")
-            
-            # Pretraga u bazi (proveravamo i original i očišćen kod)
-            result = df[
-                (df['skl'].astype(str) == barcode_data) | 
-                (df['skl'].astype(str) == clean_code)
+            # Pretvaramo cijelu kolonu u tekst, mičemo .0 i prazna mjesta
+            df_temp_sku = df[naziv_kolone_u_excelu].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
+
+            # 3. Potraži artikal
+            pronadjeno = df[df_temp_sku == scanned_code]
+
+            if not pronadjeno.empty:
+                artikal = pronadjeno.iloc[0]
+                st.balloons() # Mali efekt za uspjeh
+                st.info(f"📦 PRONAĐENO: {artikal['naziv']} | Lokacija: {artikal['lokacija']}")
+                
+                # Automatski popuni polje za sidebar
+                st.session_state.skenirani_sku = scanned_code
+            else:
+                st.error(f"❌ Artikal {scanned_code} ne postoji u tablici.")
+                st.warning("Provjeri jesu li podaci u Google tablici spremljeni (File -> Save).")
             ]
             
             if not result.empty:
