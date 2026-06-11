@@ -58,7 +58,7 @@ from PIL import Image
 import numpy as np
 
 st.divider() # Linija za razdvajanje
-st.subheader("📷 Skeniraj bar-kod kamerom")
+
 st.divider()
 st.subheader("📷 Skeniraj bar-kod (EAN-13)")
 
