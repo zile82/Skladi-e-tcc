@@ -108,7 +108,7 @@ if img_file_buffer is not None:
             else:
                 st.error(f"❌ Artikal {scanned_code} ne postoji u tablici.")
                 st.warning("Provjeri jesu li podaci u Google tablici spremljeni (File -> Save).")
-            ]
+            
             
             if not result.empty:
                 st.info(f"📦 Artikal: {result['artikel'].values[0]}")
