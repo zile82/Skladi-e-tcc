@@ -119,8 +119,6 @@ if img_file_buffer is not None:
     else:
         st.error("❌ Bar-kod nije prepoznat na slici.")
         st.info("Savet: Drži telefon mirno na oko 20cm udaljenosti. Bar-kod treba da bude horizontalan i dobro osvetljen.")
-```
-    
     barcodes = decode(img)
     
     if barcodes:
