@@ -68,6 +68,59 @@ if img_file_buffer is not None:
     img = Image.open(img_file_buffer)
     
     # Čitanje bar-koda sa slike
+    import streamlit as st
+from pyzbar.pyzbar import decode
+from PIL import Image, ImageOps
+import numpy as np
+
+st.divider()
+st.subheader("📷 Skeniraj bar-kod (EAN-13)")
+
+img_file_buffer = st.camera_input("Postavi bar-kod ispred kamere i slikaj")
+
+if img_file_buffer is not None:
+    # Učitaj sliku
+    img = Image.open(img_file_buffer)
+    
+    # --- OBRADA SLIKE ZA BOLJE ČITANJE ---
+    # 1. Pretvori u sivu boju
+    gray_img = ImageOps.grayscale(img)
+    # 2. Pojačaj kontrast (da bele linije budu belje, a crne crnje)
+    enhanced_img = ImageOps.autocontrast(gray_img)
+    
+    # Pokušaj dekodiranje na obrađenoj slici
+    barcodes = decode(enhanced_img)
+    
+    # Ako ne nađe, pokušaj na originalnoj (za svaki slučaj)
+    if not barcodes:
+        barcodes = decode(img)
+    
+    if barcodes:
+        for barcode in barcodes:
+            barcode_data = barcode.data.decode("utf-8")
+            # Čišćenje nula sa početka ako ih Excel skrati
+            clean_code = barcode_data.lstrip('0')
+            
+            st.success(f"✅ Prepoznat kod: {barcode_data}")
+            
+            # Pretraga u bazi (proveravamo i original i očišćen kod)
+            result = df[
+                (df['skl'].astype(str) == barcode_data) | 
+                (df['skl'].astype(str) == clean_code)
+            ]
+            
+            if not result.empty:
+                st.info(f"📦 Artikal: {result['artikel'].values[0]}")
+                st.metric("Količina", str(result['količina'].values[0]))
+                st.metric("Lokacija", str(result['lokacija'].values[0]))
+                st.dataframe(result)
+            else:
+                st.warning(f"Nema artikla sa kodom {barcode_data} u Excelu.")
+    else:
+        st.error("❌ Bar-kod nije prepoznat na slici.")
+        st.info("Savet: Drži telefon mirno na oko 20cm udaljenosti. Bar-kod treba da bude horizontalan i dobro osvetljen.")
+```
+    
     barcodes = decode(img)
     
     if barcodes:
