@@ -83,7 +83,7 @@ if img_file_buffer is not None:
         barcodes = decode(img)
     
     if barcodes:
-    for barcode in barcodes:
+        for barcode in barcodes:
             # 1. Uzmi skenirani kod i očisti ga
             scanned_code = str(barcode.data.decode("utf-8")).strip()
             st.success(f"✅ Skenirano: {scanned_code}")
