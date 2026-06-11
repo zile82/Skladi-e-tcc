@@ -38,8 +38,18 @@ if st.sidebar.button("Ažuriraj stanje"):
 st.subheader("Trenutno stanje")
 st.dataframe(df, use_container_width=True)
 df.columns = [x.strip().lower() for x in df.columns]
-# Brza pretraga za mobitel
+# 2. Polje za pretragu
 search = st.text_input("🔍 Brza pretraga:")
+
 if search:
-    filtered = df[df['sku'].str.contains(search, case=False) | df['naziv'].str.contains(search, case=False)]
-    st.write(filtered)
+    # 3. Provera da li kolone postoje
+    if 'sku' in df.columns and 'naziv' in df.columns:
+        filtered = df[
+            df['sku'].astype(str).str.contains(search, case=False, na=False) | 
+            df['naziv'].astype(str).str.contains(search, case=False, na=False)
+        ]
+        st.write(filtered)
+    else:
+        # Ako se kolone ne zovu tako, Streamlit će ti ispisati šta vidi
+        st.error("Greška: Kolone 'sku' i 'naziv' nisu pronađene!")
+        st.write("Kolone koje su stvarno u fajlu su:", df.columns.tolist())
