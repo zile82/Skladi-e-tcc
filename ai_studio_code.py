@@ -37,7 +37,7 @@ if st.sidebar.button("Ažuriraj stanje"):
 # --- PRIKAZ ---
 st.subheader("Trenutno stanje")
 st.dataframe(df, use_container_width=True)
-
+df.columns = [x.strip().lower() for x in df.columns]
 # Brza pretraga za mobitel
 search = st.text_input("🔍 Brza pretraga:")
 if search:
