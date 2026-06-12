@@ -21,11 +21,7 @@ ean = st.sidebar.text_input("Šifra artikla (ean)")
 naziv = st.sidebar.text_input("Naziv")
 lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Regal A", "Regal B"])
 kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
-
-# --- DODAJ OVU LINIJU ISPOD KOLIČINE ---
-    datum_unosa = 
-st.date_input("Datum ulaza", 
-value=None)
+datum_unosa = st.date_input("Datum ulaza", value=None)
     submitted = 
 st.form_submit_button("Ažuriraj stanje")
 if st.sidebar.button("Ažuriraj stanje"):
