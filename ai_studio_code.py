@@ -17,17 +17,17 @@ df = df.dropna(how="all")
 
 # --- SIDEBAR ZA UNOS ---
 st.sidebar.header("Skeniranje / Unos")
-sku = st.sidebar.text_input("Šifra artikla (SKU)")
+ean = st.sidebar.text_input("Šifra artikla (ean)")
 naziv = st.sidebar.text_input("Naziv")
 lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Regal A", "Regal B"])
 kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
 
 if st.sidebar.button("Ažuriraj stanje"):
-    # Provjeri postoji li SKU
-    if sku in df['sku'].values:
-        df.loc[df['sku'] == sku, ['naziv', 'lokacija', 'kolicina']] = [naziv, lokacija, kolicina]
+    # Provjeri postoji li ean
+    if ean in df['ean'].values:
+        df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina']] = [naziv, lokacija, kolicina]
     else:
-        new_row = pd.DataFrame([{"sku": sku, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina}])
+        new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina}])
         df = pd.concat([df, new_row], ignore_index=True)
     
     # Spremi natrag u Google Sheets
@@ -43,10 +43,10 @@ df.columns = [x.strip().lower() for x in df.columns]
 search = st.text_input("🔍 Brza pretraga (unesi artikal ili kod):")
 
 if search:
-    # Ovde smo stavili 'skl' i 'artikel' jer smo saznali da se tako zovu u tvom fajlu
-    if 'skl' in df.columns and 'artikel' in df.columns:
+    # Ovde smo stavili 'ean' i 'artikel' jer smo saznali da se tako zovu u tvom fajlu
+    if 'ean' in df.columns and 'artikel' in df.columns:
         filtered = df[
-            df['skl'].astype(str).str.contains(search, case=False, na=False) | 
+            df['ean'].astype(str).str.contains(search, case=False, na=False) | 
             df['artikel'].astype(str).str.contains(search, case=False, na=False)
         ]
         st.write(f"Pronađeno rezultata: {len(filtered)}")
@@ -89,14 +89,14 @@ if img_file_buffer is not None:
             st.success(f"✅ Skenirano: {scanned_code}")
 
             # 2. Pripremi kolonu iz tablice za usporedbu
-            # (Provjeri zove li se kolona 'sku' ili 'skl' u Excelu i ovdje upiši točno tako)
-            naziv_kolone_u_excelu = 'sku' 
+            # (Provjeri zove li se kolona 'ean' ili 'skl' u Excelu i ovdje upiši točno tako)
+            naziv_kolone_u_excelu = 'ean' 
             
             # Pretvaramo cijelu kolonu u tekst, mičemo .0 i prazna mjesta
             df_temp_sku = df[naziv_kolone_u_excelu].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
             # 3. Potraži artikal
-            pronadjeno = df[df_temp_sku == scanned_code]
+            pronadjeno = df[df_temp_ean == scanned_code]
 
             if not pronadjeno.empty:
                 artikal = pronadjeno.iloc[0]
@@ -104,7 +104,7 @@ if img_file_buffer is not None:
                 st.info(f"📦 PRONAĐENO: {artikal['naziv']} | Lokacija: {artikal['lokacija']}")
                 
                 # Automatski popuni polje za sidebar
-                st.session_state.skenirani_sku = scanned_code
+                st.session_state.skenirani_ean = scanned_code
             else:
                 st.error(f"❌ Artikal {scanned_code} ne postoji u tablici.")
                 st.warning("Provjeri jesu li podaci u Google tablici spremljeni (File -> Save).")
@@ -128,8 +128,8 @@ if img_file_buffer is not None:
             barcode_data = barcode.data.decode("utf-8")
             st.success(f"Skeniran kod: {barcode_data}")
             
-            # AUTOMATSKA PRETRAGA - koristi tvoj 'skl' stubac
-            result = df[df['skl'].astype(str) == barcode_data]
+            # AUTOMATSKA PRETRAGA - koristi tvoj 'ean' stubac
+            result = df[df['ean'].astype(str) == barcode_data]
             
             if not result.empty:
                 st.write("### Podaci o artiklu:")
