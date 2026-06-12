@@ -23,6 +23,7 @@ lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Regal A", "Reg
 kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
 datum_unosa = st.date_input("Datum ulaza", value=None)
 submitted = st.form_submit_button("Ažuriraj stanje")
+
 if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
