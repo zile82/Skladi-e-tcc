@@ -17,7 +17,8 @@ df = df.dropna(how="all")
 
 # --- SIDEBAR ZA UNOS ---
 st.sidebar.header("Skeniranje / Unos")
-with ean = st.sidebar.text_input("Šifra artikla (ean)")
+with st.sidebar.form("moja forma"):
+    ean = st.sidebar.text_input("Šifra artikla (ean)")
     naziv = st.sidebar.text_input("Naziv")
     lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Regal A", "Regal B"])
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
