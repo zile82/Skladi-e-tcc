@@ -12,7 +12,7 @@ url = "https://docs.google.com/spreadsheets/d/1AtSdX-pOFb-IaT1ACI7X7XkI4UjaMXDGv
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Učitaj podatke
-df = conn.read(spreadsheet=url, usecols=[0, 1, 2, 3])
+df = conn.read(spreadsheet=url, ttl=0, usecols=[0, 1, 2, 3])
 df = df.dropna(how="all")
 
 # --- SIDEBAR ZA UNOS ---
@@ -24,13 +24,15 @@ with st.sidebar.form("moja forma"):
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
     datum_unosa = st.date_input("Datum vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
+if submitted :
+    if ean :
 
 if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
-        df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina']] = [naziv, lokacija, kolicina]
+        df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina', 'datum_vhoda' ]] = [naziv, lokacija, kolicina, datum_vhoda]
     else:
-        new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina}])
+        new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_vhoda}])
         df = pd.concat([df, new_row], ignore_index=True)
     
     # Spremi natrag u Google Sheets
