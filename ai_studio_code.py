@@ -23,19 +23,19 @@ with st.sidebar.form("moja forma"):
     lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Hala 3", "Hala 4", "Hala 5", "Regal A", "Regal B"])
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
     datum_vhoda = st.date_input("Datum_vhoda", value=None)
-    submitted = st.form_submit_button("Ažuriraj stanje")
+    
+    submitted = 
+st.form_submit_button("Ažuriraj stanje")
 if submitted:    
     if ean :
         df_fresh = conn.read(spreadsheet=url, ttl=0)
         # priprema datuma
-        datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
-# 1. provjeri postoji li artikl (koristimo ean kolonu)
-# osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
-        ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '', regex=True).values
-    if str(ean) in ean_lista:
-                # azuriranje - dodamo datum_str na kraju liste
-df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',
-     regex=True) == str(ean), ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
+        datum_str = datum_vhoda.strftime("%d. %m. %Y") if datum_vhoda else ""
+
+    if trazeni_ean in ean_kolona.values:
+        maska = (ean_kolona == trazeni_ean) 
+        df_fresh.loc[maska,], ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
+
 st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
     else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
