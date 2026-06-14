@@ -30,8 +30,7 @@ with st.sidebar.form("moja forma"):
         datum_str = datum_vhodastrftime("%d, %m, %Y") if dadum_vhoda else ""
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
 # osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
-        ean_lista = 
-    df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
+        ean_lista = df_fresh['ean'].astype( str ).str.replace(r'\.0$', '',regex=True).values
 if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
