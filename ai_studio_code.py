@@ -25,15 +25,28 @@ with st.sidebar.form("moja forma"):
     datum_vhoda = st.date_input("Datum_vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
     
-if submited
-    if ean :
-        df_fresh = conn.read(spreadsheet=url, ttl=0)
+    if submited
+        if ean :
+            df_fresh = conn.read(spreadsheet=url, ttl=0)
         # priprema datuma
-        datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
+            datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
 # osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
-        ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
-if st.sidebar.button("Ažuriraj stanje"):
+            ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
+            if str(ean) in ean_lista:
+                # azuriranje - dodamo datum_str na kraju liste
+                df_fresh.loc[df_fresh['ean'].astype%str).strreplace(r'\.0$', '',regex=True) == str(ean),
+                                                                                                         ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
+                                                                                                                                                                         st.sidebar.success("Ažurirano!")
+                else:
+                    # novi red - dodajemo datum_str pod kljuc datu_vhoda
+                    new_row = pd.DataFrame([{
+                        "ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_str}])
+                    df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
+                    st.sidebar.succes("Dodano!")
+                conn.update(spreadsheet=url, data=df=fresh)
+                st.rerun()
+            if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
         df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina', 'datum_vhoda' ]] = [naziv, lokacija, kolicina, datum_vhoda]
