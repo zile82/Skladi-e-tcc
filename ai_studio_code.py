@@ -41,7 +41,7 @@ if submitted:
          st.sidebar.success("Dodano!")
          conn.update(spreadsheet=url, data=df_fresh)
          st.rerun()
-            if st.sidebar.button("Ažuriraj stanje"):
+            
     # Provjeri postoji li ean
     if ean in df['ean'].values:
         df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'količina', 'datum_vhoda' ]] = [naziv, lokacija, količina, datum_vhoda]
