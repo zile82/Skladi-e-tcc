@@ -25,9 +25,8 @@ with st.sidebar.form("moja forma"):
     datum_vhoda = st.date_input("Datum_vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
     
-    if submited
-        if ean :
-            df_fresh = conn.read(spreadsheet=url, ttl=0)
+if ean :
+    df_fresh = conn.read(spreadsheet=url, ttl=0)
         # priprema datuma
             datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
