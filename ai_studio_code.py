@@ -24,14 +24,14 @@ with st.sidebar.form("moja forma"):
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
     datum_vhoda = st.date_input("Datum_vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
-    
-if ean :
-    df_fresh = conn.read(spreadsheet=url, ttl=0)
+if submitted:    
+    if ean :
+        df_fresh = conn.read(spreadsheet=url, ttl=0)
         # priprema datuma
-    datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
+        datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
 # osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
-    ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '', regex=True).values
+        ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '', regex=True).values
     if str(ean) in ean_lista:
                 # azuriranje - dodamo datum_str na kraju liste
 df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',
