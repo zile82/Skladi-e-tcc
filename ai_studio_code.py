@@ -39,7 +39,7 @@ if submitted:
          new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_str}])
          df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
          st.sidebar.success("Dodano!")
-         conn.update(spreadsheet=url, data=df=fresh)
+         conn.update(spreadsheet=url, data=df_fresh)
          st.rerun()
             if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
