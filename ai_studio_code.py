@@ -23,7 +23,7 @@ with st.sidebar.form("moja forma"):
     lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Hala 3", "Hala 4", "Hala 5", "Regal A", "Regal B"])
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
     datum_vhoda = st.date_input("Datum_vhoda", value=None)
-    submitted =
+submitted =
     st.form_submit_button("Ažuriraj stanje")
 if submitted:    
     if ean :
