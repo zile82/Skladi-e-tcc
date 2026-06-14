@@ -24,16 +24,21 @@ with st.sidebar.form("moja forma"):
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
     datum_unosa = st.date_input("Datum vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
-if submitted :
+    
     if ean :
-
+        df_fresh = conn.read(spreadsheet=url, ttl=0)
+        datum_str = datum_vhodastrftime("%d, %m, %Y") if dadum_vhoda else ""
+# 1. provjeri postoji li artikl (koristimo ean kolonu)
+# osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
+        ean_lista = 
+    df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
 if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
         df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina', 'datum_vhoda' ]] = [naziv, lokacija, kolicina, datum_vhoda]
     else:
         new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_vhoda}])
-        df = pd.concat([df, new_row], ignore_index=True)
+        df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
     
     # Spremi natrag u Google Sheets
     conn.update(spreadsheet=url, data=df)
