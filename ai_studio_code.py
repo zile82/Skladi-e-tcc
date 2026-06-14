@@ -38,7 +38,7 @@ if submitted:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
          new_row = pd.DataFrame([{
                         "ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_str}])
-                        df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
+                         df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
         st.sidebar.success("Dodano!")
                 conn.update(spreadsheet=url, data=df=fresh)
                 st.rerun()
