@@ -34,9 +34,9 @@ if ean :
      ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
      if str(ean) in ean_lista:
                 # azuriranje - dodamo datum_str na kraju liste
-        df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True) == str(ean),
-                                                                                                ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
-                                                                                                                                                                         st.sidebar.success("Ažurirano!")
+        df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',
+     regex=True) == str(ean), ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
+        st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
      else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
     new_row = pd.DataFrame([{
