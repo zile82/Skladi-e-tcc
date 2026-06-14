@@ -33,11 +33,11 @@ if submitted:
         
         if trazeni_ean in ean_kolona.values:
             maska = (ean_kolona == trazeni_ean) 
-            df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = [ naziv, kolicina, lokacija, datum_str ]                                                                                                                                                           st.sidebar.success("Ažurirano!")
+            df_fresh.loc[maska, ['naziv', 'količina', 'lokacija', 'datum_vhoda']] = [ naziv, količina, lokacija, datum_str ]                                                                                                                                                           st.sidebar.success("Ažurirano!")
         else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
          new_row = pd.DataFrame([{
-                        "ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_str}])
+                        "ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_str}])
                     df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
 st.sidebar.success("Dodano!")
                 conn.update(spreadsheet=url, data=df=fresh)
@@ -45,9 +45,9 @@ st.sidebar.success("Dodano!")
             if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
-        df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'kolicina', 'datum_vhoda' ]] = [naziv, lokacija, kolicina, datum_vhoda]
+        df.loc[df['ean'] == ean, ['naziv', 'lokacija', 'količina', 'datum_vhoda' ]] = [naziv, lokacija, količina, datum_vhoda]
     else:
-        new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_vhoda}])
+        new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_vhoda}])
         df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
     
     # Spremi natrag u Google Sheets
