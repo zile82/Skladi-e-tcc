@@ -36,12 +36,11 @@ if submitted:
             df_fresh.loc[maska, ['naziv', 'količina', 'lokacija', 'datum_vhoda']] = [ naziv, količina, lokacija, datum_str ]
         else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
-         new_row = pd.DataFrame([{
-                        "ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_str}])
-                         df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
-        st.sidebar.success("Dodano!")
-                conn.update(spreadsheet=url, data=df=fresh)
-                st.rerun()
+         new_row = pd.DataFrame([{"ean": ean, "naziv": naziv, "lokacija": lokacija, "količina": količina, "datum_vhoda": datum_str}])
+         df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
+         st.sidebar.success("Dodano!")
+         conn.update(spreadsheet=url, data=df=fresh)
+         st.rerun()
             if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
