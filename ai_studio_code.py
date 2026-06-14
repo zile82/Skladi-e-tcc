@@ -35,13 +35,14 @@ if submitted:
         maska = (ean_kolona == trazeni_ean) 
         df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = [ naziv, kolicina, lokacija, datum_str ]
 
-st.sidebar.success(f"Artikl{trazeni_ean} je ažuriran!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
+st.sidebar.success(f"Artikl {trazeni_ean} je ažuriran!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
+   
     else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
          new_row = pd.DataFrame([{
                         "ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_str}])
                     df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
-st.sidebar.succes("Dodano!")
+st.sidebar.success("Dodano!")
                 conn.update(spreadsheet=url, data=df=fresh)
                 st.rerun()
             if st.sidebar.button("Ažuriraj stanje"):
