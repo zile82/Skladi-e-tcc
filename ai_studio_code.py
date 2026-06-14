@@ -35,7 +35,7 @@ if submitted:
         maska = (ean_kolona == trazeni_ean) 
         df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = [ naziv, kolicina, lokacija, datum_str ]
 
-st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
+st.sidebar.success(f"Artikl{trazeni_ean} je ažuriran!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
     else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
          new_row = pd.DataFrame([{
