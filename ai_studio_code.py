@@ -33,7 +33,7 @@ if submitted:
 
     if trazeni_ean in ean_kolona.values:
         maska = (ean_kolona == trazeni_ean) 
-        df_fresh.loc[maska,], ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
+        df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
 
 st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
     else:
