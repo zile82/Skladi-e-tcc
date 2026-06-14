@@ -32,17 +32,17 @@ if ean :
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
 # osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
     ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '', regex=True).values
-     if str(ean) in ean_lista:
+    if str(ean) in ean_lista:
                 # azuriranje - dodamo datum_str na kraju liste
-        df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',
+df_fresh.loc[df_fresh['ean'].astype(str).str.replace(r'\.0$', '',
      regex=True) == str(ean), ['naziv', 'kolicina, 'lokacija', 'datum_vhoda']] = ['naziv', 'kolicina, 'lokacija', 'datum_str']
-        st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
-     else:
+st.sidebar.success("Ažurirano!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
+    else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
-    new_row = pd.DataFrame([{
+         new_row = pd.DataFrame([{
                         "ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_str}])
                     df_fresh = pd.concat([df_fresh, new_row], ignore_index=True)
-                    st.sidebar.succes("Dodano!")
+st.sidebar.succes("Dodano!")
                 conn.update(spreadsheet=url, data=df=fresh)
                 st.rerun()
             if st.sidebar.button("Ažuriraj stanje"):
