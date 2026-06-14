@@ -12,7 +12,7 @@ url = "https://docs.google.com/spreadsheets/d/1AtSdX-pOFb-IaT1ACI7X7XkI4UjaMXDGv
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Učitaj podatke
-df = conn.read(spreadsheet=url, ttl=0, usecols=[0, 1, 2, 3])
+df = conn.read(spreadsheet=url, ttl=0)
 df = df.dropna(how="all")
 
 # --- SIDEBAR ZA UNOS ---
@@ -22,15 +22,17 @@ with st.sidebar.form("moja forma"):
     naziv = st.sidebar.text_input("Naziv")
     lokacija = st.sidebar.selectbox("Lokacija", ["Hala 1", "Hala 2", "Hala 3", "Hala 4", "Hala 5", "Regal A", "Regal B"])
     kolicina = st.sidebar.number_input("Količina", min_value=0, step=1)
-    datum_unosa = st.date_input("Datum vhoda", value=None)
+    datum_vhoda = st.date_input("Datum_vhoda", value=None)
     submitted = st.form_submit_button("Ažuriraj stanje")
     
+if submited
     if ean :
         df_fresh = conn.read(spreadsheet=url, ttl=0)
-        datum_str = datum_vhodastrftime("%d, %m, %Y") if dadum_vhoda else ""
+        # priprema datuma
+        datum_str = datum_vhoda.strftime("%d, %m, %Y") if datum_vhoda else ""
 # 1. provjeri postoji li artikl (koristimo ean kolonu)
 # osiguramo da su svi ean-ovi u tablici stringovi radi usporedbe
-        ean_lista = df_fresh['ean'].astype( str ).str.replace(r'\.0$', '',regex=True).values
+        ean_lista = df_fresh['ean'].astype(str).str.replace(r'\.0$', '',regex=True).values
 if st.sidebar.button("Ažuriraj stanje"):
     # Provjeri postoji li ean
     if ean in df['ean'].values:
