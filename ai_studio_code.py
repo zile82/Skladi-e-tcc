@@ -30,14 +30,14 @@ if submitted:
         df_fresh = conn.read(spreadsheet=url, ttl=0)
         # priprema datuma
         datum_str = datum_vhoda.strftime("%d. %m. %Y") if datum_vhoda else ""
+        
+        if trazeni_ean in ean_kolona.values:
+            maska = (ean_kolona == trazeni_ean) 
+            df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = [ naziv, kolicina, lokacija, datum_str ]
 
-    if trazeni_ean in ean_kolona.values:
-        maska = (ean_kolona == trazeni_ean) 
-        df_fresh.loc[maska, ['naziv', 'kolicina', 'lokacija', 'datum_vhoda']] = [ naziv, kolicina, lokacija, datum_str ]
-
-st.sidebar.success(f"Artikl {trazeni_ean} je ažuriran!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
-   
-    else:
+            st.sidebar.success(f"Artikl
+            {trazeni_ean} je ažuriran!")                                                                                                                                                           st.sidebar.success("Ažurirano!")
+        else:
                     # novi red - dodajemo datum_str pod kljuc datu_vhoda
          new_row = pd.DataFrame([{
                         "ean": ean, "naziv": naziv, "lokacija": lokacija, "kolicina": kolicina, "datum_vhoda": datum_str}])
