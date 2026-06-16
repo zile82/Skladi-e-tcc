@@ -114,9 +114,9 @@ if img_file_buffer is not None:
             df_temp_ean = df['ean'].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
             # 3. Potraži artikal
-            pronadjeno = df[df_temp_ean == scanned_code]
+            result = df[df_temp_ean == scanned_code]
 
-            if not pronadjeno.empty:
+            if not result.empty:
                 naziv = pronadjeno.iloc[0]
                 st.balloons() # Mali efekt za uspjeh
                 st.info(f"📦 PRONAĐENO: {naziv['naziv']} | Lokacija: {naziv['lokacija']}")
