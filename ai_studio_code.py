@@ -58,14 +58,14 @@ st.subheader("Trenutno stanje")
 st.dataframe(df, use_container_width=True)
 df.columns = [x.strip().lower() for x in df.columns]
 # 2. Polje za pretragu - sada koristimo tvoja prava imena kolona
-search = st.text_input("🔍 Brza pretraga (unesi artikal ili kod):")
+search = st.text_input("🔍 Brza pretraga (unesi naziv ili kod):")
 
 if search:
     # Ovde smo stavili 'ean' i 'artikel' jer smo saznali da se tako zovu u tvom fajlu
-    if 'ean' in df.columns and 'artikel' in df.columns:
+    if 'ean' in df.columns and 'naziv' in df.columns:
         filtered = df[
             df['ean'].astype(str).str.contains(search, case=False, na=False) | 
-            df['artikel'].astype(str).str.contains(search, case=False, na=False)
+            df['naziv'].astype(str).str.contains(search, case=False, na=False)
         ]
         st.write(f"Pronađeno rezultata: {len(filtered)}")
         st.write(filtered)
@@ -117,9 +117,9 @@ if img_file_buffer is not None:
             pronadjeno = df[df_temp_ean == scanned_code]
 
             if not pronadjeno.empty:
-                artikal = pronadjeno.iloc[0]
+                naziv = pronadjeno.iloc[0]
                 st.balloons() # Mali efekt za uspjeh
-                st.info(f"📦 PRONAĐENO: {artikal['naziv']} | Lokacija: {artikal['lokacija']}")
+                st.info(f"📦 PRONAĐENO: {naziv['naziv']} | Lokacija: {nazib['lokacija']}")
                 
                 # Automatski popuni polje za sidebar
                 st.session_state.skenirani_ean = scanned_code
@@ -129,7 +129,7 @@ if img_file_buffer is not None:
             
             
             if not result.empty:
-                st.info(f"📦 Artikal: {result['artikel'].values[0]}")
+                st.info(f"📦 Naziv: {result['naziv'].values[0]}")
                 st.metric("Količina", str(result['količina'].values[0]))
                 st.metric("Lokacija", str(result['lokacija'].values[0]))
                 st.dataframe(result)
@@ -153,7 +153,7 @@ if img_file_buffer is not None:
                 st.write("### Podaci o artiklu:")
                 # Prikaz podataka u lepim karticama
                 c1, c2, c3 = st.columns(3)
-                c1.metric("Artikal", str(result['artikel'].values[0]))
+                c1.metric("Naziv", str(result['naziv'].values[0]))
                 c2.metric("Količina", str(result['količina'].values[0]))
                 c3.metric("Lokacija", str(result['lokacija'].values[0]))
                 
