@@ -111,7 +111,7 @@ if img_file_buffer is not None:
             naziv_kolone_u_excelu = 'ean' 
             
             # Pretvaramo cijelu kolonu u tekst, mičemo .0 i prazna mjesta
-            df_temp_ean = df['ean].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
+            df_temp_ean = df['ean'].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
             # 3. Potraži artikal
             pronadjeno = df[df_temp_ean == scanned_code]
