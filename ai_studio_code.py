@@ -119,7 +119,7 @@ if img_file_buffer is not None:
             if not pronadjeno.empty:
                 naziv = pronadjeno.iloc[0]
                 st.balloons() # Mali efekt za uspjeh
-                st.info(f"📦 PRONAĐENO: {naziv['naziv']} | Lokacija: {nazib['lokacija']}")
+                st.info(f"📦 PRONAĐENO: {naziv['naziv']} | Lokacija: {naziv['lokacija']}")
                 
                 # Automatski popuni polje za sidebar
                 st.session_state.skenirani_ean = scanned_code
